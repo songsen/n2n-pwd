@@ -53,7 +53,7 @@ int main (int argc, char *argv[])
 
    //char custm_ip[64]={0};
  
-    Connection("localhost", "root", "1007030237", "test"); 
+    Connection("localhost", "root", "yss", "n2n"); 
     
 
     regs = malloc(sizeof(n2n_REGISTER_SUPER_t));
