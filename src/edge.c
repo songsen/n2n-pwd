@@ -532,7 +532,7 @@ static void help() {
 	 "-l <supernode host:port> "
 	 "[-p <local port>] [-M <mtu>] "
      "[-r] [-E] [-v] [-t <mgmt port>] [-b] [-h]\n\n"
-     "-A <account>");
+     "-A <account>\n");
 
 #ifdef __linux__
   printf("-d <tun device>          | tun device name\n");
