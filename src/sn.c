@@ -752,8 +752,49 @@ static const struct option long_options[] = {
 };
 
 
+/**
+ * 获取配置文件参数
+*/
 
+char* get_opt( const char *opts)
+{
+#define BUFF_SIZE 512
+#define configFIle "/etc/n2n.conf"
+    static char buff[BUFF_SIZE];
 
+    bzero(buff,BUFF_SIZE);
+    FILE *conf = fopen(configFIle,"r");
+    if(conf ==NULL){
+        perror("open config err!!!");
+        exit(-1); //打开配置文件失败
+    }
+
+    while(fgets(buff,BUFF_SIZE,conf)!= NULL){
+        if(strcmp(buff,"\n")==0)
+            continue;
+        char *para = strtok(buff," = \n\r");
+        if(para == NULL)
+            continue;
+        do{
+            if( para[0] =='#')
+                break;
+
+            if(strcmp(para,opts)==0){
+                para = strtok(NULL," =\n\r");
+                if(para != NULL){
+                    fclose(conf);
+                    return para;
+                };
+            }
+            
+        }while((para = strtok(NULL," =\n\r")) != NULL );
+
+        bzero(buff,BUFF_SIZE);
+    }
+
+    fclose(conf);
+    return "0";
+}
 
 
 /** Main program entry point from kernel. */
@@ -767,7 +808,15 @@ int main( int argc, char * const argv[] )
 #endif
 
 #if 1//MYSQL_ENABLE
-    Connection("localhost", "root", "1007030237", "test"); 
+    
+    char para[4][64];
+    memcpy(para[0],get_opt("host"),64);
+    memcpy(para[1],get_opt("user"),64);
+    memcpy(para[2],get_opt("passwd"),64);
+    memcpy(para[3],get_opt("db"),64);
+    printf("host:%s,user:%s,psswd:%s,db:%s",para[0],para[1],para[2],para[3]);
+    Connection(para[0], para[1], para[2], para[3]); 
+ //   Connection("localhost", "root", "1007030237", "test"); 
 
     if(Exist(table_ip) == 0)
         Create( table_ip,table_ip_descr );
