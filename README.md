@@ -113,3 +113,17 @@ TF   (-O3) 14046
 NULL (-O3) 10659
 
 (C) 2007-2010 - Luca Deri <deri@ntop.org>, Richard Andrews <andrews@ntop.org>
+
+
+install
+----------------
+1. lib
+ debian
+ sudo apt-get install libmysqlclient-dev
+ sudo apt-get install libssl-dev
+
+
+  sudo edge -d edge0 -a 10.0.0.20 -c mynetwork -u 1000 -g 1000 -k password -l songsen:6200 -m ae:e0:4f:e7:47:5d -A 1007030237
+
+  edge -d edge0 -a 10.0.0.30 -c mynetwork -u 1000 -g 1000 -k password -l songsen:6200 -m ae:e0:4f:e7:47:5e -A 1007030237 -f
+
